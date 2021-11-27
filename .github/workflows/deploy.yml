@@ -1,4 +1,4 @@
-name: tugas
+name: cicd-crud-pelanggan
 
 on:
   push:
