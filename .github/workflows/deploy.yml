@@ -95,7 +95,7 @@ jobs:
         with:
           host: ${{ env.INSTANCE_IP }}
           username: opc
-          key: ${{ secrets.OCI_KEY_FILE }}
+          key: ${{ secrets.SSH_KEY }}
           source: "docker-compose.yml"
           target: "./"
 
@@ -104,7 +104,7 @@ jobs:
         with:
           host: ${{env.INSTANCE_IP}}
           username: opc
-          key: ${{secrets.OCI_KEY_FILE}}
+          key: ${{secrets.SSH_KEY}}
           script: |
             sudo yum install -y yum-utils
             sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
