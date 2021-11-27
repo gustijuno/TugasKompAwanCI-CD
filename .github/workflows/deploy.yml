@@ -14,8 +14,7 @@ jobs:
           echo "Starting the build job"
       - name: 'Checkout'
         uses: actions/checkout@v2
-
-
+      
       - name: 'Login to Dockerhub'
         uses: docker/login-action@v1
         with:
@@ -54,7 +53,7 @@ jobs:
             oci compute instance list \
             --lifecycle-state RUNNING \
             --compartment-id ${{secrets.VM_COMPARTMENT_OCID}} \
-            --display-name cicd-demo \
+            --display-name cicd-crud-pelanggan \
             --query "data [0].id" \
             --raw-output \
             )" >> $GITHUB_ENV
@@ -68,7 +67,7 @@ jobs:
             --shape ${{secrets.VM_SHAPE}} \
             --shape-config '{"memoryInGBs": 1, "ocpus": 1}' \
             --assign-public-ip true \
-            --display-name cicd-demo \
+            --display-name cicd-crud-pelanggan \
             --image-id ${{secrets.VM_CUSTOM_IMAGE_OCID}} \
             --ssh-authorized-keys-file /home/runner/.oci/oci_api_key_public.pem \
             --subnet-id ${{secrets.VM_SUBNET_OCID}} \
@@ -96,7 +95,7 @@ jobs:
         with:
           host: ${{ env.INSTANCE_IP }}
           username: opc
-          key: ${{ secrets.SSH_KEY }}
+          key: ${{ secrets.OCI_KEY_FILE }}
           source: "docker-compose.yml"
           target: "./"
 
@@ -105,7 +104,7 @@ jobs:
         with:
           host: ${{env.INSTANCE_IP}}
           username: opc
-          key: ${{secrets.SSH_KEY}}
+          key: ${{secrets.OCI_KEY_FILE}}
           script: |
             sudo yum install -y yum-utils
             sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
